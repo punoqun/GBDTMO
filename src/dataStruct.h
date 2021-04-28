@@ -39,6 +39,8 @@ void histogram_single(vector<int32_t> &, Histogram &, uint16_t *, double *, doub
 
 void histogram_multi(vector<int32_t> &, Histogram &, uint16_t *, double *, double *, int);
 
+void create_vsrp(int *, int);
+
 struct Dataset {
     int num = 0;
     double *Features;
