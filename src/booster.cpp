@@ -463,10 +463,36 @@ BoosterMulti::get_score_opt(Histogram &Hist, vector<pair<double, int>> &opt, vec
     }
 }
 
+void BoosterMulti::create_vsrp(int *X, int M)
+{
+    int j;
+    double r;
+    double tmp1 = 1.0 / (2.0 * sqrt(M));
+    std::random_device rd;
+    static std::mt19937 e(rd());
+
+    for (j = 0; j < M; j++) {
+        static std::uniform_real_distribution<> dis(0, 1);
+        r = dis(e);
+        if (r < tmp1)
+            X[j] = -1;
+        else if (r > (1.0 - tmp1))
+            X[j] = 1;
+        else
+            X[j] = 0;
+//        printf("%f\n",X[j]);
+//        printf("%d",j);
+    }
+//    exit(0);
+}
+
 void BoosterMulti::hist_all(vector<int32_t> &order, vector<Histogram> &Hist) {
+
+    int Xp[hp.out_dim];
+    create_vsrp(Xp, hp.out_dim);
 #pragma omp parallel for schedule(static)
     for (int i = 0; i < hp.inp_dim; ++i) {
-        histogram_multi(order, Hist[i], Train.Maps + i * Train.num, G, H, hp.out_dim);
+        histogram_multi(order, Hist[i], Train.Maps + i * Train.num, G, H, Xp, hp.out_dim);
     }
 }
 

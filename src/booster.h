@@ -94,6 +94,7 @@ private:
 
     void get_score_opt(Histogram &, double &, double &);
 
+
     void hist_all(vector<int32_t> &, vector<Histogram> &);
 
     void boost_column(Histogram &, int);
@@ -128,6 +129,8 @@ private:
     void get_score_opt(Histogram &, vector<double> &, vector<double> &, double &);
 
     void get_score_opt(Histogram &, vector<pair<double, int>> &, vector<double> &, double &);
+
+    void create_vsrp(int *, int);
 
     void hist_all(vector<int32_t> &, vector<Histogram> &);
 
