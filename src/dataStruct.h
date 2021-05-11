@@ -37,7 +37,7 @@ struct Histogram {
 
 void histogram_single(vector<int32_t> &, Histogram &, uint16_t *, double *, double *);
 
-void histogram_multi(vector<int32_t> &, Histogram &, uint16_t *, const double *, const double *, const int *, int);
+void histogram_multi(vector<int32_t> &, Histogram &, uint16_t *, const double *, const double *, const double *, int);
 
 
 struct Dataset {

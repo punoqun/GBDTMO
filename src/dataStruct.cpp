@@ -18,7 +18,7 @@ void histogram_single(vector<int32_t> &order, Histogram &Hist, uint16_t *maps, d
     }
 }
 
-void histogram_multi(vector<int32_t> &order, Histogram &Hist, uint16_t *maps, const double *G, const double *H, const int *Xp, int out_dim) {
+void histogram_multi(vector<int32_t> &order, Histogram &Hist, uint16_t *maps, const double *G, const double *H, const double *Xp, int out_dim) {
     int j, ind, bin;
     for (auto i : order) {
         bin = maps[i] * out_dim;
@@ -26,7 +26,18 @@ void histogram_multi(vector<int32_t> &order, Histogram &Hist, uint16_t *maps, co
         ++Hist.cnt[maps[i]];
         for (j = 0; j < out_dim; j++) {
 //            printf("%f\n",H[ind]);
+//            if(Xp[j]==0.0) {
+//                bin++;
+//                ind++;
+//                continue;
+//            }
             Hist.g[bin] += G[ind] * Xp[j];
+
+            if(Xp[j]==0.0) {
+                bin++;
+                ind++;
+                continue;
+            }
             Hist.h[bin++] += H[ind++];// * Xp[j];
         }
     }
@@ -38,8 +49,12 @@ void histogram_multi(vector<int32_t> &order, Histogram &Hist, uint16_t *maps, co
     for (int i = 1; i < Hist.cnt.size(); ++i) {
         Hist.cnt[i] += Hist.cnt[i - 1];
         for (j = 0; j < out_dim; j++) {
-//            printf("%f\n",Xp[j]);
-            Hist.g[ind + out_dim] += Hist.g[ind];// * Xp[j];
+//            printf("%f\n", Hist.g[ind + out_dim] + Hist.g[ind]);
+            Hist.g[ind + out_dim] += Hist.g[ind] * Xp[j];
+            if(Xp[j]==0.0) {
+                ind++;
+                continue;
+            }
             Hist.h[ind + out_dim] += Hist.h[ind];// * Xp[j];
             ++ind;
         }

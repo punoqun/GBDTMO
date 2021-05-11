@@ -463,7 +463,7 @@ BoosterMulti::get_score_opt(Histogram &Hist, vector<pair<double, int>> &opt, vec
     }
 }
 
-void BoosterMulti::create_vsrp(int *X, int M)
+void BoosterMulti::create_vsrp(double *X, int M)
 {
     int j;
     double r;
@@ -479,7 +479,7 @@ void BoosterMulti::create_vsrp(int *X, int M)
         else if (r > (1.0 - tmp1))
             X[j] = 1;
         else
-            X[j] = 0;
+            X[j] = 1e-30;
 //        printf("%f\n",X[j]);
 //        printf("%d",j);
     }
@@ -488,7 +488,7 @@ void BoosterMulti::create_vsrp(int *X, int M)
 
 void BoosterMulti::hist_all(vector<int32_t> &order, vector<Histogram> &Hist) {
 
-    int Xp[hp.out_dim];
+    double Xp[hp.out_dim];
     create_vsrp(Xp, hp.out_dim);
 #pragma omp parallel for schedule(static)
     for (int i = 0; i < hp.inp_dim; ++i) {

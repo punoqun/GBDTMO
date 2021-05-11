@@ -130,7 +130,7 @@ private:
 
     void get_score_opt(Histogram &, vector<pair<double, int>> &, vector<double> &, double &);
 
-    void create_vsrp(int *, int);
+    void create_vsrp(double *, int);
 
     void hist_all(vector<int32_t> &, vector<Histogram> &);
 
